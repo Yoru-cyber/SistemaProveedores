@@ -23,14 +23,22 @@ with app.app_context():
 def index():
     return render_template('index.html', title='Home')
 
-@app.route('/Ventas')
+@app.route('/Ventas', methods=['GET'])
 def ventas():
     ventas = db.session.query(Venta).all()
     data = [{'id': venta.id, 'nameProvider': venta.nameProvider, 'nameProduct': venta.nameProduct, 'unitsProduct': venta.unitsProduct, 'pricePerUnit': venta.pricePerUnit, 'date': venta.date} for venta in ventas]
     return jsonify(data)
 
-@app.route('/Venta/<int:id_venta>')
+@app.route('/Venta/<int:id_venta>', methods=['GET'])
 def ventaID(id_venta):
     venta = db.get_or_404(Venta, id_venta)
     ventaJSON = {'id': venta.id, 'nameProvider': venta.nameProvider, 'nameProduct': venta.nameProduct, 'unitsProduct': venta.unitsProduct, 'pricePerUnit': venta.pricePerUnit, 'date': venta.date}
     return ventaJSON
+
+@app.route('/Venta/<int:id_venta>/edit', methods=['GET', 'PUT'])
+def editVenta(id_venta):
+    venta = db.get_or_404(Venta, id_venta)
+    return render_template('edit.html', title='Edit', venta=venta)
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('page_not_found.html', title='Page Not Found 404', error=error), 404

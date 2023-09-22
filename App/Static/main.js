@@ -6,11 +6,19 @@ fetch("http://localhost:5000/Ventas")
       const deleteButton = document.createElement("button");
       deleteButton.innerHTML = "Eliminar";
       deleteButton.className = "btn btn-danger";
+      deleteButton.id = element.id;
       deleteButton.name = 'deleteBtn';
       const editButton = document.createElement("button");
       editButton.innerHTML = "Editar";
       editButton.className = "btn btn-primary";
       editButton.name = 'editBtn';
+      editButton.id = element.id;
+      editButton.onclick = () => {
+        window.location.href = `/Venta/${editButton.id}/edit`;
+      }
+      deleteButton.onclick = () => {
+        window.location.href = `/Venta/${deleteButton.id}/delete`;
+      }
       const tr = document.createElement("tr");
       const td1 = document.createElement("td");
       const td2 = document.createElement("td");
