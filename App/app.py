@@ -13,7 +13,7 @@ class Venta(db.Model):
     nameProvider: Mapped[VARCHAR] = mapped_column(VARCHAR)
     nameProduct: Mapped[VARCHAR] = mapped_column(VARCHAR)
     unitsProduct: Mapped[BIGINT] = mapped_column(BIGINT)
-    pricePerUnit: Mapped[DECIMAL] = mapped_column(DECIMAL(10,2))
+    pricePerUnit: Mapped[DECIMAL] = mapped_column(DECIMAL(8,2))
     date: Mapped[DATE] = mapped_column(DATE)
 
 with app.app_context():
@@ -39,6 +39,9 @@ def ventaID(id_venta):
 def editVenta(id_venta):
     venta = db.get_or_404(Venta, id_venta)
     return render_template('edit.html', title='Edit', venta=venta)
+@app.route('/Venta/new', methods=['GET', 'POST'])
+def newVenta():
+    return render_template('new.html', title='New')
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('page_not_found.html', title='Page Not Found 404', error=error), 404

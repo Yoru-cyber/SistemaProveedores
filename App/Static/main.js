@@ -10,7 +10,7 @@ fetch("http://localhost:5000/Ventas")
       deleteButton.name = 'deleteBtn';
       const editButton = document.createElement("button");
       editButton.innerHTML = "Editar";
-      editButton.className = "btn btn-primary";
+      editButton.className = "btn btn-secondary";
       editButton.name = 'editBtn';
       editButton.id = element.id;
       editButton.onclick = () => {
