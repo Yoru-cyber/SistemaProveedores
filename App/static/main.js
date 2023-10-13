@@ -8,6 +8,10 @@ fetch("http://localhost:5000/Ventas")
       deleteButton.className = "btn btn-danger";
       deleteButton.id = element.id;
       deleteButton.name = 'deleteBtn';
+      deleteButton.onclick = () => {HandleDelete(deleteButton.id);}
+      function HandleDelete(id){
+        openPopUp(id);
+      }
       const editButton = document.createElement("button");
       editButton.innerHTML = "Editar";
       editButton.className = "btn btn-secondary";
@@ -16,9 +20,7 @@ fetch("http://localhost:5000/Ventas")
       editButton.onclick = () => {
         window.location.href = `/Venta/${editButton.id}/edit`;
       }
-      deleteButton.onclick = () => {
-        window.location.href = `/Venta/${deleteButton.id}/delete`;
-      }
+   
       const tr = document.createElement("tr");
       const td1 = document.createElement("td");
       const td2 = document.createElement("td");

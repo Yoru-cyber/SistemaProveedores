@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <title>{{title}}</title>
+  </head>
+  <body>
+    <h1 style="text-align: center">Nueva venta</h1>
+    <form method="post">
+      {{form.csrf_token}}
+    <div class="container border border-dark-subtle rounded">
+      <div class="row p-2">
+        <div class="col">
+          <div class="mb-3">
+            <label for="nameProvider" class="form-label"
+              >Nombre del Proveedor</label
+            >
+            {{form.nameProvider}}
+            <small id="helpId" class="form-text text-muted"
+              >Nombre del Proveedor</small
+            >
+            
+
+          </div>
+        </div>
+        <div class="col">
+          <div class="mb-3">
+            <label for="unitsProduct" class="form-label">Unidades</label>
+          {{form.unitsProduct}}
+            <small id="helpId" class="form-text text-muted">Unidades</small>
+          </div>
+
+        </div>
+        <div class="col">
+          <div class="mb-3">
+            <label for="nameProvider" class="form-label"
+              >Nombre del Producto</label
+            >
+            {{form.nameProduct}}
+            <small id="helpId" class="form-text text-muted"
+              >Nombre del Producto</small
+            >
+          </div>
+        </div>
+      </div>
+      <div class="row p-2">
+        <div class="col">
+          <div class="mb-3">
+            <label for="" class="form-label">Precio Unitario</label>
+            {{form.pricePerUnit}}
+            <small id="helpId" class="form-text text-muted"
+              >Precio Unitario</small
+            >
+          </div>
+        </div>
+        <div class="col">
+          <div class="mb-3">
+            <label for="" class="form-label">Fecha de la Venta</label>
+         {{form.date}}
+            <small id="helpId" class="form-text text-muted"
+              >Fecha de la venta</small
+            >
+          </div>
+        </div>
+      </div>
+      <center>
+      {{form.submit}}
+    </center>
+    </div>
+  </form>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

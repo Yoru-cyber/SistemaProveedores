@@ -11,12 +11,15 @@
     />
     <title>{{title}}</title>
     <link rel="stylesheet" href="/static/buttons.css" />
+    <link rel="stylesheet" href="/static/DeleteNotification.css" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤓</text></svg>">
   </head>
   <body style=" text-align: center">
-    <h1 style="text-align: center">Sistema de Ventas</h1>
+    <div style="display: flex; justify-content: center; align-items: center;">
+    <h1>Sistema de Ventas</h1> <img style="width: 80px; height: 80px;"  src="/static/nanami.png"> 
+  </div>
     <main style="display: flex; justify-content: center; align-items: center; flex-direction: column; height: 90vh; padding: 20px">
-    <table class="table table-bordered border-dark" style="text-align: center">
+    <table id="TableProducts" class="table table-bordered border-dark" style="text-align: center">
       <thead>
         <tr>
           <th scope="col">id</th>
@@ -33,7 +36,7 @@
     </table>
     <div class="btn-group p-1" role="group">
       <a href="/Venta/new" class="btn btn-primary m-2 rounded">Agregar nueva Venta</a>
-      <button name="export" id="export" class="btn btn-success m-2 rounded">Exportar Excel</button>
+      <button name="export" id="export" class="btn btn-success m-2 rounded" onclick="exportExcel()">Exportar Excel</button>
     </div>
   </main>
     <script
@@ -41,6 +44,14 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
     <script src="/static/main.js"></script>
+    <script src="/static/DeleteNotification.js"></script>
+    <script src="/static/exportExcel.js"></script>
+    <div id="pop-up" class="hidden">
+      <p>¿Estás seguro de que deseas eliminar este elemento?</p>
+      <button class="btn btn-primary rounded" onclick="deleteProduct()">Confirmar</button>
+      <button class="btn btn-secondary rounded" onclick="closePopUp()">Cancelar</button>
+    </div>
   </body>
 </html>

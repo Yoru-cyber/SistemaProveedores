@@ -1,9 +1,11 @@
-from flask import Flask, jsonify, json, render_template
+from flask import Flask, jsonify,render_template, request, flash, redirect
 from dbConfig import db
-from sqlalchemy import BIGINT, VARCHAR, DATE, DECIMAL, text
+from sqlalchemy import BIGINT, VARCHAR, DATE, DECIMAL
 from sqlalchemy.orm import Mapped, mapped_column
+from Venta import VentaForm
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://root:1234@localhost/ventas'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://yoru:d4#/3!A?@localhost:3306/ventas'
+app.config['SECRET_KEY'] = "Your_secret_string"
 db.init_app(app)
 
 #model
@@ -35,13 +37,46 @@ def ventaID(id_venta):
     ventaJSON = {'id': venta.id, 'nameProvider': venta.nameProvider, 'nameProduct': venta.nameProduct, 'unitsProduct': venta.unitsProduct, 'pricePerUnit': venta.pricePerUnit, 'date': venta.date}
     return ventaJSON
 
-@app.route('/Venta/<int:id_venta>/edit', methods=['GET', 'PUT'])
+@app.route('/Venta/<int:id_venta>/delete', methods=['GET'])
+def deleteVENTA(id_venta):
+    deleteVenta = db.get_or_404(Venta, int(id_venta))
+    db.session.delete(deleteVenta)
+    db.session.commit()
+    flash('Venta Eliminada con éxito!', 'success')
+    return redirect('/')
+
+@app.route('/Venta/<int:id_venta>/edit', methods=['GET', 'POST'])
 def editVenta(id_venta):
+    form = VentaForm() 
+    if request.method == 'POST':
+        form.nameProvider.data = request.form['nameProvider']
+        form.nameProduct.data = request.form['nameProduct']
+        form.unitsProduct.data = request.form['unitsProduct']
+        form.pricePerUnit.data = request.form['pricePerUnit']
+        form.date.data = request.form['date']
+        editVenta = Venta.query.filter_by(id=id_venta).first()
+        editVenta.nameProvider = form.nameProvider.data
+        editVenta.nameProduct = form.nameProduct.data
+        editVenta.unitsProduct = form.unitsProduct.data
+        editVenta.pricePerUnit = form.pricePerUnit.data
+        editVenta.date = form.date.data
+        db.session.commit()
+        flash('Venta Editada con éxito!', 'success')
+        return redirect('/')
     venta = db.get_or_404(Venta, id_venta)
-    return render_template('edit.html', title='Edit', venta=venta)
+    return render_template('edit.html', title='Edit', form=form, venta=venta)
+
 @app.route('/Venta/new', methods=['GET', 'POST'])
 def newVenta():
-    return render_template('new.html', title='New')
+    form = VentaForm(request.form)
+    if request.method == 'POST' and form.validate():
+        venta = Venta(nameProvider=form.nameProvider.data, nameProduct=form.nameProduct.data, unitsProduct=form.unitsProduct.data, pricePerUnit=form.pricePerUnit.data, date=form.date.data)
+        db.session.add(venta)
+        db.session.commit()
+        flash('Venta Agregada con éxito!', 'success')
+        return redirect('/')
+    return render_template('new.html', title='New', form=form)
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('page_not_found.html', title='Page Not Found 404', error=error), 404
