@@ -52,8 +52,8 @@ def editVenta(id_venta):
         db.session.commit()
         flash('Venta Editada con éxito!', 'success')
         return redirect('/')
-    venta = db.get_or_404(venta, id_venta)
-    return render_template('edit.html', title='Edit', form=form, venta=venta)
+    ventaEdit = db.get_or_404(venta, id_venta)
+    return render_template('edit.html', title='Edit', form=form, venta=ventaEdit)
 
 @app.route('/Venta/new', methods=['GET', 'POST'])
 def newVenta():
