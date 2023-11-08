@@ -63,8 +63,8 @@ def editVenta(id_venta):
 def newVenta():
     form = VentaForm(request.form)
     if request.method == 'POST' and form.validate():
-        venta = venta(nameProvider=form.nameProvider.data, nameProduct=form.nameProduct.data, unitsProduct=form.unitsProduct.data, pricePerUnit=form.pricePerUnit.data, date=form.date.data)
-        db.session.add(venta)
+        newVenta = venta(nameProvider=form.nameProvider.data, nameProduct=form.nameProduct.data, unitsProduct=form.unitsProduct.data, pricePerUnit=form.pricePerUnit.data, date=form.date.data)
+        db.session.add(newVenta)
         db.session.commit()
         flash('Venta Agregada con éxito!', 'success')
         return redirect('/')
