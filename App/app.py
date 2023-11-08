@@ -2,11 +2,15 @@ from flask import Flask, jsonify,render_template, request, flash, redirect
 from dbConfig import db
 from model.Venta import Venta as venta 
 from Venta import VentaForm
+import os
+from dotenv import load_dotenv
+load_dotenv()
+DATABASE_URL = os.getenv('DATABASE_URL')
+TOKEN_KEY = os.getenv('TOKEN_KEY')
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://yoru:d4#/3!A?@localhost:3306/ventas'
-app.config['SECRET_KEY'] = "Your_secret_string"
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+app.config['SECRET_KEY'] = TOKEN_KEY
 db.init_app(app)
-
 with app.app_context():
     db.create_all()
 
